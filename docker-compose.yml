@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  web:
+    build: ./backend
+    restart: always
+    command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+    # install requirements.txt
+
+    volumes:
+      - ./backend/:/usr/backend/app/
+    ports:
+      - "8002:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:apple@db/bess
+  db:
+    image: postgres:14-alpine
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=apple
+      - POSTGRES_DB=bess
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
+    name: financial_modeling_bess

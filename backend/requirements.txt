@@ -1,0 +1,13 @@
+fastapi
+sqlalchemy
+databases
+pytz
+psycopg2
+asyncpg
+sqlmodel
+bcrypt
+PyJwt
+python-dateutil
+uvicorn
+python-dotenv
+pydantic[email]
