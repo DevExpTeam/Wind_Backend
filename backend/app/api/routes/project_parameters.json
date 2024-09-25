@@ -68,7 +68,7 @@
             "construction_period_in_months": "24",
             "operation_period": "40",
             "decommissioning_period": "3",
-            "modeling_time_interval": 3
+            "modeling_time_interval": 2
         },
         "created_at": "2024-09-16 19:21",
         "updated_at": "2024-09-16 19:21"

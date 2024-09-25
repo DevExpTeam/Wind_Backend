@@ -5,7 +5,6 @@ import os
 import json
 
 import app.api.utils.calcFunctions.input as val
-from app.api.utils.calcFunctions.input import dbInput
 
 values = []
 global currency_unit
@@ -44,7 +43,7 @@ capacity_factor_apply_period_data = [12,18,18,20]
 # Indexation assumptions
 
 global inflation_rate_data
-inflation_rate_data = [0.020,0.020,0.025,0.025,0.0275,0.0275,0.030,0.030,0.030,0.030]
+inflation_rate_data = [[0.020,0.020,0.025,0.025,0.0275,0.0275,0.030,0.030,0.030,0.030]]
 
 global inflation_base_year
 inflation_base_year = 2021
@@ -52,13 +51,13 @@ inflation_base_year = 2021
 # Revenue assumptions
 
 global feed_in_tariff_price_per_mw
-feed_in_tariff_price_per_mw = {"unitCost":110,"inflationProfile":inflation_rate_data}
+feed_in_tariff_price_per_mw = {"unitCost":110,"inflationProfile":inflation_rate_data[0]}
 
 global merchant_price_per_mwh
-merchant_price_per_mwh = {"unitCost":40,"inflationProfile":inflation_rate_data}
+merchant_price_per_mwh = {"unitCost":40,"inflationProfile":inflation_rate_data[0]}
 
 global revenue_from_others_per_month
-revenue_from_others_per_month = {"unitCost":25000,"inflationProfile":inflation_rate_data}
+revenue_from_others_per_month = {"unitCost":25000,"inflationProfile":inflation_rate_data[0]}
 
 global ppaTerm
 ppaTerm = 15
@@ -75,12 +74,12 @@ global fuel_cost_per_mwh
 global transport_cost_per_mwh
 global maintenance_cost_per_mwh
 
-staff_cost_per_mwh = {"unitCost":10,"inflationProfile":inflation_rate_data}
-equipment_cost_per_mwh = {"unitCost":3,"inflationProfile":inflation_rate_data}
-consumables_cost_per_mwh = {"unitCost":1,"inflationProfile":inflation_rate_data}
-fuel_cost_per_mwh = {"unitCost":1,"inflationProfile":inflation_rate_data}
-transport_cost_per_mwh = {"unitCost":3,"inflationProfile":inflation_rate_data}
-maintenance_cost_per_mwh = {"unitCost":3,"inflationProfile":inflation_rate_data}
+staff_cost_per_mwh = {"unitCost":10,"inflationProfile":inflation_rate_data[0]}
+equipment_cost_per_mwh = {"unitCost":3,"inflationProfile":inflation_rate_data[0]}
+consumables_cost_per_mwh = {"unitCost":1,"inflationProfile":inflation_rate_data[0]}
+fuel_cost_per_mwh = {"unitCost":1,"inflationProfile":inflation_rate_data[0]}
+transport_cost_per_mwh = {"unitCost":3,"inflationProfile":inflation_rate_data[0]}
+maintenance_cost_per_mwh = {"unitCost":3,"inflationProfile":inflation_rate_data[0]}
 
 # Other Fixed Costs Assumptions ~~~ Assumptions sheet/4 Operating Cost/4.02
 # unit of fixed costs is 1000
@@ -91,12 +90,12 @@ global security_per_year
 global community_per_year
 global management_fee_per_year
 
-spv_costs_per_year = {"fixedCost":400,"inflationProfile":inflation_rate_data}
-insurance_per_year = {"fixedCost":219.2,"inflationProfile":inflation_rate_data}
-land_lease_per_year = {"fixedCost":8.5,"inflationProfile":inflation_rate_data}
-security_per_year = {"fixedCost":200,"inflationProfile":inflation_rate_data}
-community_per_year = {"fixedCost":45,"inflationProfile":inflation_rate_data}
-management_fee_per_year = {"fixedCost":8.5,"inflationProfile":inflation_rate_data}
+spv_costs_per_year = {"fixedCost":400,"inflationProfile":inflation_rate_data[0]}
+insurance_per_year = {"fixedCost":219.2,"inflationProfile":inflation_rate_data[0]}
+land_lease_per_year = {"fixedCost":8.5,"inflationProfile":inflation_rate_data[0]}
+security_per_year = {"fixedCost":200,"inflationProfile":inflation_rate_data[0]}
+community_per_year = {"fixedCost":45,"inflationProfile":inflation_rate_data[0]}
+management_fee_per_year = {"fixedCost":8.5,"inflationProfile":inflation_rate_data[0]}
 
 # Construction cost assumption ~~~ Assumptions sheet/2 Construction Cost
 # Development and Project Management
@@ -199,15 +198,21 @@ dep_years = {
 dep_method = "straightMethod"
 
 
+def get_cur_path():
+    return os.path.dirname(os.path.realpath(__file__))
+
 def initial():
-    file_path = "C:\\Users\\admin\\Desktop\\Wind\\Wind back from repo\\Wind_Backend\\backend\\app\\api\\routes\\project_parameters.json"
+    print("First Initial")
+    current_dir = get_cur_path()
+    file_name = 'project_parameters.json'
+    file_path = os.path.join(current_dir, '..\\..', 'routes', file_name)
     with open(file_path, 'r') as val:
         global values
         values = json.load(val)
         
     modelTimingData = [1, 3, 6, 12]
     global modelling_time_interval
-    modelling_time_interval = 1
+    modelling_time_interval = next((p for p in values if p['param_index'] == "basic_project_inputs"), None)["value"]["modeling_time_interval"]
     global construction_start_date
     construction_start_date = next((p for p in values if p['param_index'] == "basic_project_inputs"), None)["value"]["construction_start_date"]
 
@@ -443,7 +448,7 @@ def initial():
         "logisticsAndOthersYears" : 40,
         "developerFeeYears" : 40
         }
-    global dep_method
+
 
         
     #     dep_method = "straightMethod"

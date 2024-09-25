@@ -76,6 +76,7 @@ async def testFunc(parameter_id: int):
     f.write(records_to_json(data))
     f.close()
     basInputs.initial()
+    print("modleTimeInterval",basInputs.modelling_time_interval)
     return profitAndLossReturn()
 
 @router.get("/getBalanceSheet") 
@@ -120,4 +121,5 @@ async def testFunc(parameter_id: int):
     f.write(records_to_json(data))
     f.close()
     basInputs.initial()
-    return basResults.construction_start_dateTime
+    print("test in router")
+    return basResults.calcPeriodsPerYear
