@@ -10,4 +10,5 @@ PyJwt
 python-dateutil
 uvicorn
 python-dotenv
+watchdog
 pydantic[email]

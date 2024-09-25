@@ -1,0 +1,160 @@
+[
+    {
+        "id": 4,
+        "parameter_id": 2,
+        "param_index": "revenue@power_purachase_agreement",
+        "value": {
+            "ppa_start_date": "2023-01-01",
+            "ppa_case": 1,
+            "base_case": "15",
+            "management_case": "17",
+            "upside_case": "18",
+            "electricity_sold_percen_base_case": "80",
+            "electricity_sold_percen_management_case": "90",
+            "electricity_sold_percen_upside_case": "100"
+        },
+        "created_at": "2024-09-16 19:21",
+        "updated_at": "2024-09-16 19:21"
+    },
+    {
+        "id": 10,
+        "parameter_id": 2,
+        "param_index": "financing",
+        "value": {
+            "debt_ratio": "75",
+            "construction_debt_tenure": "20",
+            "libor": "3",
+            "margin": "3",
+            "target_dscr": "1.5",
+            "arrangement_fees": "0.3",
+            "commitment_fees": "0.3",
+            "debt_service_period_to_be_considered_for_dsra_balance": "1"
+        },
+        "created_at": "2024-09-17 07:37",
+        "updated_at": "2024-09-17 07:37"
+    },
+    {
+        "id": 11,
+        "parameter_id": 2,
+        "param_index": "other_assumptions",
+        "value": {
+            "receivable_days": "60",
+            "payable_days": "60",
+            "income_tax_rate": "20",
+            "tax_holiday_period": "2",
+            "vat_on_revenue": "15",
+            "vat_on_cost": "15",
+            "vat_on_construction_cost": "15",
+            "development_and_project_management": "100",
+            "turbine_cost": "100",
+            "civil_work": "100",
+            "logistics_and_others": "100",
+            "developer_fee": "100",
+            "vat_settlement_period": "60",
+            "cost_of_equity": "6.7632"
+        },
+        "created_at": "2024-09-17 21:25",
+        "updated_at": "2024-09-17 21:25"
+    },
+    {
+        "id": 3,
+        "parameter_id": 2,
+        "param_index": "basic_project_inputs",
+        "value": {
+            "project_name": "Wind Farm",
+            "capacity_per_turbine": "3",
+            "number_of_turbine": "20",
+            "construction_start_date": "2021-01-01",
+            "construction_period_in_months": "24",
+            "operation_period": "40",
+            "decommissioning_period": "3",
+            "modeling_time_interval": 3
+        },
+        "created_at": "2024-09-16 19:21",
+        "updated_at": "2024-09-16 19:21"
+    },
+    {
+        "id": 6,
+        "parameter_id": 2,
+        "param_index": "revenue@revenue_from_others",
+        "value": {
+            "other_revenue_inflation_profile": 1,
+            "base_case": "25000",
+            "management_case": "30000",
+            "upside_case": "30000"
+        },
+        "created_at": "2024-09-17 01:12",
+        "updated_at": "2024-09-17 01:12"
+    },
+    {
+        "id": 7,
+        "parameter_id": 2,
+        "param_index": "revenue@tariff",
+        "value": {
+            "fit_inflation_profile": 1,
+            "fit_base_case": "110",
+            "fit_management_case": "120",
+            "fit_upside_case": "130",
+            "merchant_inflation_profile": 1,
+            "merchant_base_case": "40",
+            "merchant_management_case": "45",
+            "merchant_upside_case": "50"
+        },
+        "created_at": "2024-09-17 02:48",
+        "updated_at": "2024-09-17 02:48"
+    },
+    {
+        "id": 8,
+        "parameter_id": 2,
+        "param_index": "operating_cost@variable_o_and_m_cost",
+        "value": {
+            "staff_cost_inflaion_profile": 1,
+            "equipment_inflaion_profile": 1,
+            "consumables_inflaion_profile": 1,
+            "fuel_inflaion_profile": 1,
+            "maintenance_inflaion_profile": 1,
+            "transport_inflaion_profile": 1,
+            "staff_cost_base_case": "10",
+            "staff_cost_management_case": "9",
+            "staff_cost_upside_case": "8",
+            "equipment_base_case": "3",
+            "equipment_management_case": "3",
+            "equipment_upside_case": "3",
+            "consumables_base_case": "1",
+            "consumables_management_case": "1",
+            "consumables_upside_case": "1",
+            "fuel_base_case": "1",
+            "fuel_management_case": "1",
+            "fuel_upside_case": "1",
+            "maintenance_base_case": "3",
+            "maintenance_management_case": "2",
+            "maintenance_upside_case": "2",
+            "transport_base_case": "3",
+            "transport_management_case": "3",
+            "transport_upside_case": "3"
+        },
+        "created_at": "2024-09-17 02:59",
+        "updated_at": "2024-09-17 02:59"
+    },
+    {
+        "id": 9,
+        "parameter_id": 2,
+        "param_index": "operating_cost@other_fixed_costs",
+        "value": {
+            "spv_inflaion_profile": 1,
+            "insurance_inflaion_profile": 1,
+            "land_inflaion_profile": 1,
+            "security_inflaion_profile": 1,
+            "community_inflaion_profile": 1,
+            "management_inflaion_profile": 1,
+            "spv_annual_cost": "400",
+            "insurance_annual_cost": "219.2",
+            "land_annual_cost": "8.5",
+            "security_annual_cost": "200",
+            "community_annual_cost": "45",
+            "management_annual_cost": "8.5"
+        },
+        "created_at": "2024-09-17 07:18",
+        "updated_at": "2024-09-17 07:18"
+    }
+]

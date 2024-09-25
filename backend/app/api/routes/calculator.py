@@ -18,96 +18,106 @@ from app.core.common import ErrorCode
 from app.api.utils.calculator.basic_functions import *
 from app.api.utils.calculator.vintages import *
 from app.api.utils.jwt_auth_handler import JWTBearer
+from app.api.utils.calcFunctions.ControlAccounts import getCashWaterfallItemsData
+import app.api.utils.calcFunctions.basicAssumptions as basInputs
+import app.api.utils.calcFunctions.basicResults as basResults
+
+
+from app.api.utils.calcFunctions.test import waterfallReturn
+from app.api.utils.calcFunctions.test import cashflowReturn
+from app.api.utils.calcFunctions.test import profitAndLossReturn
+from app.api.utils.calcFunctions.test import balanceSheetReturn
+from app.api.utils.calcFunctions.test import revenueGraphReturn
+from app.api.utils.calcFunctions.test import costGraphReturn
+
+
+
+
+
+import os
+
 import json
 router = APIRouter()
+def records_to_json(records):
+    # Convert each record to a dictionary and return a JSON string
+    return json.dumps([dict(record) for record in records], indent=4)
 
-@router.post("/test") 
+def get_cur_path():
+    return os.path.dirname(os.path.realpath(__file__))
+
+@router.get("/getWaterfall") 
 async def testFunc(parameter_id: int):
     data =  await parameter_manager.get_parameter_info_list_by_parameter_id(parameter_id)
-
-    data= data[0]
-    values = data["value"]
-
-    construction_period_in_months = values["construction_period_in_months"]
-    print(construction_period_in_months)
-    return values
+    file_name = 'project_parameters.json'
+    current_dir = get_cur_path()
+    f = open(current_dir + '/' + file_name, 'w')
+    f.write(records_to_json(data))
+    f.close()
+    basInputs.initial()
+    return waterfallReturn()
    
+@router.get("/getCashflow") 
+async def testFunc(parameter_id: int):
+    data =  await parameter_manager.get_parameter_info_list_by_parameter_id(parameter_id)
+    file_name = 'project_parameters.json'
+    current_dir = get_cur_path()
+    f = open(current_dir + '/' + file_name, 'w')
+    f.write(records_to_json(data))
+    f.close()
+    basInputs.initial()
+    return cashflowReturn()
+ 
+@router.get("/getProfitAndLoss") 
+async def testFunc(parameter_id: int):
+    data =  await parameter_manager.get_parameter_info_list_by_parameter_id(parameter_id)
+    file_name = 'project_parameters.json'
+    current_dir = get_cur_path()
+    f = open(current_dir + '/' + file_name, 'w')
+    f.write(records_to_json(data))
+    f.close()
+    basInputs.initial()
+    return profitAndLossReturn()
 
-@router.post("/revenue/wholesale_day_ahead")
-def get_wholesale_day_ahead(payload: WholeDaysAheadSchema): 
-    modelStartDate = payload.modelStartDate
-    operationStartDate = payload.operationStartDate
+@router.get("/getBalanceSheet") 
+async def testFunc(parameter_id: int):
+    data =  await parameter_manager.get_parameter_info_list_by_parameter_id(parameter_id)
+    file_name = 'project_parameters.json'
+    current_dir = get_cur_path()
+    f = open(current_dir + '/' + file_name, 'w')
+    f.write(records_to_json(data))
+    f.close()
+    basInputs.initial()
+    return balanceSheetReturn()
 
-    decommissioningEndDate = payload.decommissioningEndDate
-    assumptionsData = payload.assumptionsData
-    revenueSetup = payload.revenueSetup
-    detailedRevenueData = payload.detailedRevenueData 
-    inflationInputs = payload.inflationInputs
-    initialCycleData = payload.initialCycleData
-    startingAssumptionsForBatteries = payload.startingAssumptionsForBatteries
-    initialCapacity = payload.initialCapacity
-    batteryDisposals = payload.batteryDisposals
-    batteryEfficiency = payload.batteryEfficiency
-    batteryAugmentation = payload.batteryAugmentation
-    model = payload.model
-    batteryDuration = payload.batteryDuration
-    batteryCubes = payload.batteryCubes
-    batteryExCubes = payload.batteryExCubes
-    capexPaymentsProfile = payload.capexPaymentsProfile
-    capexPaymentMilestones = payload.capexPaymentMilestones
-    capexUEL = payload.capexUEL
-    bessCapexForecast = payload.bessCapexForecast
-    batterySensitivity = payload.batterySensitivity
-    operationYears = payload.operationYears
-    decommissioningEndDate = payload.decommissioningEndDate
-    decommissioningStartDate = payload.decommissioningStartDate
-    
+@router.get("/getRevenueGraphData") 
+async def testFunc(parameter_id: int):
+    data =  await parameter_manager.get_parameter_info_list_by_parameter_id(parameter_id)
+    file_name = 'project_parameters.json'
+    current_dir = get_cur_path()
+    f = open(current_dir + '/' + file_name, 'w')
+    f.write(records_to_json(data))
+    f.close()
+    basInputs.initial()
+    return revenueGraphReturn()
 
-    period = getMonthsNumberFromModelStartDate(modelStartDate, decommissioningEndDate) - 1
+@router.get("/getCostGraphData") 
+async def testFunc(parameter_id: int):
+    data =  await parameter_manager.get_parameter_info_list_by_parameter_id(parameter_id)
+    file_name = 'project_parameters.json'
+    current_dir = get_cur_path()
+    f = open(current_dir + '/' + file_name, 'w')
+    f.write(records_to_json(data))
+    f.close()
+    basInputs.initial()
+    return costGraphReturn()
 
-    selectedAssumptionsData = next((d for d in assumptionsData if d.get('providerName') == revenueSetup.get("forecastProviderChoice")), None).get("data")
-    activeScenario = getActiveScenarioRevenueItems(revenueSetup,assumptionsData,startingAssumptionsForBatteries,detailedRevenueData)
-    forecastProviderInputs = normalize_array_by_seasonality(
-        round_array( multiply_number(next(
-                (d for d in activeScenario if d.get('item') == "Wholesale Day Ahead Revenue"), None
-                ).get("data"), 1/(1000 *((1 + selectedAssumptionsData.get("efficiency") / 100) / 2)))
-               ,10), period)
-
-    tempinflationAdjustmentFactor = round_array(calcInflationAdjustmentFactor(inflationInputs, selectedAssumptionsData.get("inflation"), selectedAssumptionsData.get("baseYear"), revenueSetup.get("inflation"), revenueSetup.get("baseYear")), 10)
-    inflationAdjustmentFactor = normalize_array(annual_index_to_months(tempinflationAdjustmentFactor),period)
-
-    operationsAsAPercentOfPeriod = get_as_a_percent_of_period(modelStartDate, operationStartDate, decommissioningStartDate, decommissioningEndDate)
-
-    degradadedCapacityAdjustedForEffiAndAvailability = calcVintages(
-        revenueSetup, 
-        assumptionsData, 
-        detailedRevenueData, 
-        initialCycleData, 
-        initialCapacity, 
-        startingAssumptionsForBatteries, 
-        batteryDisposals, 
-        batteryEfficiency, 
-        batteryAugmentation, 
-        model, 
-        batteryDuration, 
-        batteryCubes, 
-        batteryExCubes, 
-        inflationInputs, 
-        capexPaymentsProfile, 
-        capexPaymentMilestones, 
-        capexUEL, 
-        bessCapexForecast, 
-        batterySensitivity, 
-        operationYears, 
-        modelStartDate, 
-        operationStartDate,
-        decommissioningEndDate,
-	decommissioningStartDate)
-    return degradadedCapacityAdjustedForEffiAndAvailability
-    degradadedCapacityAdjustedForEffiAndAvailability = round_array([d * 0.01 * startingAssumptionsForBatteries.batteryAvailability for d in calcVintages(revenueSetup, assumptionsData, detailedRevenueData, initialCycleData, initialCapacity, startingAssumptionsForBatteries, batteryDisposals, batteryEfficiency, batteryAugmentation, model, batteryDuration, batteryCubes, batteryExCubes, inflationInputs, capexPaymentsProfile, capexPaymentMilestones, capexUEL, bessCapexForecast, sensitivity, operationYears, modelStartDate, operationStartDate).totalGenerationCapacity], 10)
-    
-    
-    return degradadedCapacityAdjustedForEffiAndAvailability
-
-    return roundArray([d * forecastProviderInputs[index] * operationsAsAPercentOfPeriod[index] * inflationAdjustmentFactor[index] * (1 + revenueSensitivity) for index, d in enumerate(degradadedCapacityAdjustedForEffiAndAvailability)], 2)
-
+@router.get("/test") 
+async def testFunc(parameter_id: int):
+    data =  await parameter_manager.get_parameter_info_list_by_parameter_id(parameter_id)
+    file_name = 'project_parameters.json'
+    current_dir = get_cur_path()
+    f = open(current_dir + '/' + file_name, 'w')
+    f.write(records_to_json(data))
+    f.close()
+    basInputs.initial()
+    return basResults.construction_start_dateTime
