@@ -4,15 +4,15 @@ services:
   web:
     build: ./backend
     restart: always
-    command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+    command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8020
     # install requirements.txt
 
     volumes:
       - ./backend/:/usr/backend/app/
     ports:
-      - "8002:8000"
+      - "8022:8020"
     environment:
-      - DATABASE_URL=postgresql://postgres:apple@db/bess
+      - DATABASE_URL=postgresql://postgres:apple@db/wind
   db:
     image: postgres:14-alpine
     restart: always
@@ -21,11 +21,11 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=apple
-      - POSTGRES_DB=bess
+      - POSTGRES_DB=wind
 
 volumes:
   postgres_data:
 
 networks:
   default:
-    name: financial_modeling_bess
+    name: financial_modeling_wind
