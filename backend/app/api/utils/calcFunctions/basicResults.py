@@ -1,9 +1,13 @@
 import datetime
 from datetime import date
 from dateutil.relativedelta import relativedelta
-import app.api.utils.calcFunctions.basicAssumptions as inp
+import app.api.utils.calcFunctions.basicAssumptions as basInputs
 from app.api.utils.calcFunctions.basicFun import getDate
+from app.api.utils.calcFunctions.basicAssumptions import BasicAssumptions
 
+
+inp = BasicAssumptions()
+inp.initial()
 global calcPeriodsPerYear
 calcPeriodsPerYear = int(12 / inp.modelling_time_interval)
 

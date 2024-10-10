@@ -9,8 +9,10 @@ from app.api.utils.calcFunctions.basicFun import getDate
 
 from app.api.utils.calcFunctions.basicResults import getPeriodFlag
 from app.api.utils.calcFunctions.basicResults import calcInflationRate
-import app.api.utils.calcFunctions.basicAssumptions as inp
+import app.api.utils.calcFunctions.basicAssumptions as basInputs
 import app.api.utils.calcFunctions.basicResults as basResult
+
+inp = basInputs.basInputs
 
 def calcIndexedResult(inflation_rate_data, baseValue):
     

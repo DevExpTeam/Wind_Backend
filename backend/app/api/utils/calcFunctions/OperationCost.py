@@ -3,8 +3,9 @@ from app.api.utils.calcFunctions.basicFun import multiplyArrays
 from app.api.utils.calcFunctions.basicFun import sumArrays
 from app.api.utils.calcFunctions.basicResults import calcInflationRate
 import app.api.utils.calcFunctions.basicResults as basResult
-import app.api.utils.calcFunctions.basicAssumptions as inp
+import app.api.utils.calcFunctions.basicAssumptions as basInputs
 
+inp = basInputs.basInputs
 
 # Calculation of variable costs
 global staffCostPerPeriod

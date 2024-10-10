@@ -1,4 +1,4 @@
-import app.api.utils.calcFunctions.basicAssumptions as inp
+import app.api.utils.calcFunctions.basicAssumptions as basInputs
 import app.api.utils.calcFunctions.basicResults as basResult
 from app.api.utils.calcFunctions.basicFun import arrayFillWithZeros
 from app.api.utils.calcFunctions.basicFun import multiplyArrayByNumber
@@ -6,6 +6,8 @@ from app.api.utils.calcFunctions.basicFun import multiplyArrays
 from app.api.utils.calcFunctions.basicFun import sumArrays
 from app.api.utils.calcFunctions.basicFun import calcSumOfValuesOfTheArray
 
+
+inp = basInputs.basInputs
 # Non circular part
 global interest_rate
 interest_rate = pow((1 + inp.construction_debt_assumption["libor"] / 100 + inp.construction_debt_assumption["margin"] / 100),inp.modelling_time_interval / 12) - 1

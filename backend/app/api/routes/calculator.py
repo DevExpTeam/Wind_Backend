@@ -20,6 +20,8 @@ from app.api.utils.calculator.vintages import *
 from app.api.utils.jwt_auth_handler import JWTBearer
 from app.api.utils.calcFunctions.ControlAccounts import getCashWaterfallItemsData
 import app.api.utils.calcFunctions.basicAssumptions as basInputs
+from app.api.utils.calcFunctions.basicAssumptions import BasicAssumptions
+
 import app.api.utils.calcFunctions.basicResults as basResults
 
 
@@ -29,10 +31,6 @@ from app.api.utils.calcFunctions.test import profitAndLossReturn
 from app.api.utils.calcFunctions.test import balanceSheetReturn
 from app.api.utils.calcFunctions.test import revenueGraphReturn
 from app.api.utils.calcFunctions.test import costGraphReturn
-
-
-
-
 
 import os
 
@@ -53,6 +51,7 @@ async def testFunc(parameter_id: int):
     f = open(current_dir + '/' + file_name, 'w')
     f.write(records_to_json(data))
     f.close()
+    basInputs = BasicAssumptions()
     basInputs.initial()
     return waterfallReturn()
    
@@ -64,6 +63,7 @@ async def testFunc(parameter_id: int):
     f = open(current_dir + '/' + file_name, 'w')
     f.write(records_to_json(data))
     f.close()
+    basInputs = BasicAssumptions()
     basInputs.initial()
     return cashflowReturn()
  
@@ -75,6 +75,7 @@ async def testFunc(parameter_id: int):
     f = open(current_dir + '/' + file_name, 'w')
     f.write(records_to_json(data))
     f.close()
+    basInputs = BasicAssumptions()
     basInputs.initial()
     print("modleTimeInterval",basInputs.modelling_time_interval)
     return profitAndLossReturn()
@@ -87,6 +88,7 @@ async def testFunc(parameter_id: int):
     f = open(current_dir + '/' + file_name, 'w')
     f.write(records_to_json(data))
     f.close()
+    basInputs = BasicAssumptions()
     basInputs.initial()
     return balanceSheetReturn()
 
@@ -98,6 +100,7 @@ async def testFunc(parameter_id: int):
     f = open(current_dir + '/' + file_name, 'w')
     f.write(records_to_json(data))
     f.close()
+    basInputs = BasicAssumptions()
     basInputs.initial()
     return revenueGraphReturn()
 
@@ -109,6 +112,7 @@ async def testFunc(parameter_id: int):
     f = open(current_dir + '/' + file_name, 'w')
     f.write(records_to_json(data))
     f.close()
+    basInputs = BasicAssumptions()
     basInputs.initial()
     return costGraphReturn()
 
@@ -120,6 +124,7 @@ async def testFunc(parameter_id: int):
     f = open(current_dir + '/' + file_name, 'w')
     f.write(records_to_json(data))
     f.close()
+    basInputs = BasicAssumptions()
     basInputs.initial()
     print("test in router")
-    return basResults.calcPeriodsPerYear
+    return basInputs.modelling_time_interval

@@ -1,5 +1,5 @@
 import app.api.utils.calcFunctions.basicResults as basResult
-import app.api.utils.calcFunctions.basicAssumptions as inp
+import app.api.utils.calcFunctions.basicAssumptions as basInputs
 import app.api.utils.calcFunctions.ConstructionCost as consCosRes
 from app.api.utils.calcFunctions.basicFun import calcSumOfValuesOfTheArray
 from app.api.utils.calcFunctions.basicFun import sumArrays
@@ -14,6 +14,7 @@ import app.api.utils.calcFunctions.OperationCost as operCostRes
 import app.api.utils.calcFunctions.DecommissioningCost as decomCostRes
 # Control accounts sheet ~~~ 1 Depreciation
 
+inp = basInputs.basInputs
 global depSummary
 
 totalCapexData = calcConsCostSummary()
